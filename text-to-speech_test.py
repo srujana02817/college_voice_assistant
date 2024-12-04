@@ -1,14 +1,39 @@
 import speech_recognition as sr
 import pyttsx3
+import spacy
+from textblob import TextBlob
 
-# Initialize recognizer and TTS engine
+
+# Initialize recognizer and TTS engine and NLP model
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
+nlp = spacy.load("en_core_web_sm")
 
 def speak_text(text):
     """Convert text to speech."""
     engine.say(text)
     engine.runAndWait()
+
+def extract_entities(command):
+    """Extract key entities from the command."""
+    doc = nlp(command)
+    entities = [ent.text for ent in doc.ents if ent.label_ in [""" Entities from the database """]]
+    return entities
+
+def analyze_sentiment(command):
+    """Analyze the sentiment of the command(optional)."""
+    blob = TextBlob(command)
+    return blob.sentiment.polarity
+
+def interpret_command(command):
+    """Generate a response based on the extracteed entities."""
+    entities = extract_entities(command)
+    if "" in command.lower():
+        if entities :
+            return f"Let me find the {entities[0]} nameeee "
+        else :
+            return "Which department would you like to find ?"
+    return "I'm not sure how to help with that . Can you repharse ?"
 
 # Start voice recognition
 with sr.Microphone() as source:
@@ -23,8 +48,9 @@ with sr.Microphone() as source:
         command = recognizer.recognize_google(audio)
         print(f"You said: {command}")
 
-        # Respond with TTS
-        response = f"You just said: {command}. How can I assist you further?"
+        # Respond with NLP
+        response = interpret_command(command)
+        print(f"Response : {response}")
         speak_text(response)
 
     except sr.UnknownValueError:
