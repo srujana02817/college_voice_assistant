@@ -26,14 +26,32 @@ def analyze_sentiment(command):
     return blob.sentiment.polarity
 
 def interpret_command(command):
-    """Generate a response based on the extracteed entities."""
-    entities = extract_entities(command)
-    if "" in command.lower():
-        if entities :
-            return f"Let me find the {entities[0]} nameeee "
-        else :
-            return "Which department would you like to find ?"
-    return "I'm not sure how to help with that . Can you repharse ?"
+    """Interpret user command and return appropriate response."""
+    doc = nlp(command.lower())
+    
+    if "department" in command:
+        return "Let me find the department you're looking for."
+    elif any(word in command for word in ["faculty", "professor", "teacher"]):
+        return "I will provide details about the faculty."
+    elif "principal" in command:
+        return "The principal's office is in Block A."
+    elif any(word in command for word in ["library", "libra"]):
+        return "The library is on the second floor."
+    elif "event" in command:
+        return "The next event is scheduled for March 2024."
+    elif doc.ents and any(ent.label_ == "PERSON" for ent in doc.ents):
+        return f"I will find information about {doc.ents[0].text}."
+    elif TextBlob(command).sentiment.polarity < 0:
+        return "I'm here to help. How can I assist you further?"
+    else:
+        return "I'm not sure about that. Let me check."
+
+
+def test_commands(command_list):
+    for command in command_list:
+        print(f"User Command: {command}")
+        response = interpret_command(command)
+        print(f"Response: {response}\n")
 
 # Start voice recognition
 with sr.Microphone() as source:
@@ -59,3 +77,4 @@ with sr.Microphone() as source:
     except sr.RequestError:
         print("Could not request results from Google Speech Recognition.")
         speak_text("There seems to be an issue with the internet connection.")
+
