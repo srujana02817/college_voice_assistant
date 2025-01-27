@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #2a2a72, #009ffd);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #f8f9fa;
+        }
+
+        /* Container */
+        .container {
+            text-align: center;
+            background: #1c1c1c;
+            padding: 50px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            max-width: 500px;
+            width: 100%;
+            margin: 0 20px;
+        }
+
+        /* Title and Subtitle */
+        .title {
+            font-size: 2.6rem;
+            margin-bottom: 15px;
+            color: #e1e1e1;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #bdbdbd;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Output Box */
+        .output-box {
+            background: #2c2c2c;
+            border: 2px solid #414141;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 150px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-size: 1rem;
+            text-align: left;
+            margin-top: 25px;
+            color: #f8f9fa;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .output-box p {
+            margin: 0;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Button Styling */
+        button,
+        input[type="text"] {
+            font-size: 1rem;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button {
+            background: #4a4a4a;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: #5a5a5a;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"] {
+            background: #333;
+            color: #f8f9fa;
+            border: 1px solid #444;
+            width: 100%;
+            max-width: 320px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #6c5ce7;
+            box-shadow: 0 0 8px rgba(108, 92, 231, 0.3);
+        }
+
+        /* Start Listening Button */
+        #start-btn {
+            background: #555555;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 12px 22px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #start-btn.active {
+            background: #c0392b;
+            box-shadow: 0 6px 15px rgba(192, 57, 43, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        footer a {
+            color: #74b9ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #0984e3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Voice Assistant</div>
+        <div class="subtitle">Your smart assistant, ready to respond at your command.</div>
+
+        <!-- Input Controls -->
+        <div class="controls">
+            <button id="start-btn">Start Listening</button>
+            <input type="text" id="text-input" placeholder="Type your command...">
+            <button id="submit-btn">Send</button>
+        </div>
+
+        <!-- Output Box -->
+        <div class="output-box" id="output-box">
+            <p>Your assistant's responses will appear here...</p>
+        </div>
+
+        <footer><a href="#">A Campus Navigator</a></footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

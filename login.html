@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Voice Assistant</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus {
+            border: 1px solid #6e8efb;
+            outline: none;
+        }
+
+        button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .forgot-password {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #6e8efb;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .forgot-password:hover {
+            color: #4caf50;
+        }
+
+        #otp-container {
+            display: none;
+            margin-top: 15px;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="title">Login to Voice Assistant</div>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button id="login-btn">Login</button>
+        <div class="forgot-password" id="forgot-password">Forgot Password?</div>
+        <div id="error-message" class="error"></div>
+
+        <!-- OTP Section -->
+        <div id="otp-container">
+            <input type="email" id="email" placeholder="Enter your email">
+            <button id="send-otp-btn">Send OTP</button>
+            <input type="number" id="otp" placeholder="Enter OTP" style="margin-top: 10px;">
+            <button id="verify-otp-btn">Verify OTP</button>
+        </div>
+    </div>
+
+    <script>
+        const loginButton = document.getElementById("login-btn");
+        const forgotPassword = document.getElementById("forgot-password");
+        const otpContainer = document.getElementById("otp-container");
+        const errorMessage = document.getElementById("error-message");
+        const sendOtpButton = document.getElementById("send-otp-btn");
+        const verifyOtpButton = document.getElementById("verify-otp-btn");
+
+        let generatedOtp;
+
+        // Simple login validation
+        loginButton.addEventListener("click", () => {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Replace with real authentication logic
+            if (username === "admin" && password === "12345") {
+                window.location.href = "index.html"; // Redirect to the voice assistant
+            } else {
+                errorMessage.textContent = "Invalid username or password. Please try again.";
+            }
+        });
+
+        // Handle Forgot Password
+        forgotPassword.addEventListener("click", () => {
+            otpContainer.style.display = "block";
+            errorMessage.textContent = ""; // Clear any previous error
+        });
+
+        // Send OTP
+        sendOtpButton.addEventListener("click", () => {
+            const email = document.getElementById("email").value;
+
+            if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                errorMessage.textContent = "Please enter a valid email address.";
+                return;
+            }
+
+            // Simulate OTP generation
+            generatedOtp = Math.floor(1000 + Math.random() * 9000);
+            alert(`OTP sent to ${email}: ${generatedOtp}`); // Replace this with an email service
+        });
+
+        // Verify OTP
+        verifyOtpButton.addEventListener("click", () => {
+            const enteredOtp = document.getElementById("otp").value;
+
+            if (parseInt(enteredOtp, 10) === generatedOtp) {
+                alert("OTP verified successfully. You can now reset your password.");
+                otpContainer.style.display = "none";
+            } else {
+                errorMessage.textContent = "Invalid OTP. Please try again.";
+            }
+        });
+    </script>
+</body>
+</html>
